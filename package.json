@@ -1,0 +1,39 @@
+{
+  "name": "urllite",
+  "version": "0.0.1",
+  "description": "A lightweight URL library for JavaScript.",
+  "main": "urllite.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "grunt": "~0.4.1"
+  },
+  "devDependencies": {
+    "mocha": "~1.13.0",
+    "coffee-script": "~1.6.3",
+    "grunt-cli": "~0.1.9",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-mocha": "~0.4.1",
+    "grunt-contrib-connect": "~0.5.0",
+    "grunt-bump": "0.0.11"
+  },
+  "scripts": {
+    "prepublish": "grunt build",
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hzdg/urllite.js.git"
+  },
+  "keywords": [
+    "javascript",
+    "browser"
+  ],
+  "author": "Matthew Tretter <m@tthewwithanm.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hzdg/urllite.js/issues"
+  }
+}
