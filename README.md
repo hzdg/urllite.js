@@ -23,4 +23,33 @@ url.hash      // "#three"
 ```
 
 
+## Usage
+
+
+### In the browser
+
+```html
+<script src="urllite-standalone.js"></script>
+<script>
+    var url = urllite('http://u:p@example.com:10/a/b/c?one=1&two=2#three');
+</script>
+```
+
+You can also use urllite as an AMD module.
+
+
+### In node
+
+```javascript
+var urllite = require('urllite');
+var url = urllite('http://u:p@example.com:10/a/b/c?one=1&two=2#three');
+```
+
+
+### In your own libraries
+
+You can compile urllite into your own libraries using a tool like [browserify].
+
+
 [URLUtils]: https://developer.mozilla.org/en-US/docs/Web/API/URLUtils
+[browserify]: http://browserify.org
