@@ -9,20 +9,26 @@ module.exports = (grunt) ->
   # Project configuration.
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
+    browserify:
+      options:
+        transform: ['coffeeify']
+      lib:
+        options:
+          standalone: 'urllite'
+        files:
+          'urllite-standalone.js': './lib/core.js'
+          'urllite-standalone-full.js': './lib/complete.js'
+      tests:
+        files:
+          './test/tests.js': './test/tests.litcoffee'
     coffee:
       compile:
         files: [
           expand: true
           cwd: './src/'
           src: ['*.litcoffee', '*.coffee']
-          dest: './'
+          dest: './lib/'
           rename: coffeeRename
-        ]
-      tests:
-        files: [
-          expand: true
-          src: 'test/**/*.coffee'
-          ext: '.js'
         ]
     connect:
       tests:
@@ -39,9 +45,12 @@ module.exports = (grunt) ->
     watch:
       options:
         atBegin: true
-      coffee:
-        files: ['src/*.litcoffee', 'src/*.coffee', 'test/*.coffee']
-        tasks: ['coffee']
+      lib:
+        files: ['src/*.litcoffee', 'src/*.coffee']
+        tasks: ['build:lib']
+      tests:
+        files: ['test/*.litcoffee', 'test/urls.json']
+        tasks: ['build:tests']
     bump:
       options:
         files: ['package.json', 'bower.json']
@@ -56,8 +65,11 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-connect'
   grunt.loadNpmTasks 'grunt-mocha'
   grunt.loadNpmTasks 'grunt-bump'
+  grunt.loadNpmTasks 'grunt-browserify'
 
   # Define tasks.
-  grunt.registerTask 'build', ['coffee']
+  grunt.registerTask 'build', ['build:lib', 'build:tests']
+  grunt.registerTask 'build:lib', ['coffee', 'browserify:lib']
+  grunt.registerTask 'build:tests', ['browserify:tests']
   grunt.registerTask 'default', ['build']
-  grunt.registerTask 'test', ['coffee', 'connect:tests', 'mocha']
+  grunt.registerTask 'test', ['build', 'connect:tests', 'mocha']
