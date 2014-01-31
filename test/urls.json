@@ -1,3 +1,9 @@
 [
-  "http://u:p@example.com:80/a/b/c?one=1&two=2#three"
+  "http://u:p@example.com:10/a/b/c?one=1&two=2#three",
+  "http:/u:p@example.com:10/a/b/c?one=1&two=2#three",
+  "http://u@example.com:10/a/b/c?one=1&two=2#three",
+  "http://example.com:10/a/b/c?one=1&two=2#three",
+  "http://example.com/a/b/c?one=1&two=2#three",
+  "http://example.com?one=1&two=2#three",
+  "http://example.com#three"
 ]
