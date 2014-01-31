@@ -41,7 +41,8 @@ as the canonical parse result to check against.
 
     describe 'urllite', ->
       for url in urls
-        it "should correctly parse #{ url }", -> testParsing url
+        do (url) ->
+          it "should correctly parse #{ url }", -> testParsing url
 
 
 [idl-attributes]: http://www.whatwg.org/specs/web-apps/current-work/multipage/urls.html#url-decomposition-idl-attributes
