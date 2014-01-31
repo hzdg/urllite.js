@@ -9,7 +9,7 @@ Its core API is based on the [URLUtils] interface (the properties of "a"
 HTMLElements and `window.location`):
 
 ```javascript
-url = urllite('http://u:p@example.com:10/a/b/c?one=1&two=2#three');
+var url = urllite('http://u:p@example.com:10/a/b/c?one=1&two=2#three');
 url.origin    // "http://example.com:10"
 url.protocol  // "http:"
 url.username  // "u"
