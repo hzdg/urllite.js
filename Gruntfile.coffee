@@ -12,12 +12,12 @@ module.exports = (grunt) ->
     browserify:
       options:
         transform: ['coffeeify']
-      lib:
+      standalone:
         options:
           standalone: 'urllite'
         files:
-          'urllite-standalone.js': './lib/core.js'
-          'urllite-standalone-full.js': './lib/complete.js'
+          './browser-builds/standalone/urllite.js': './lib/core.js'
+          './browser-builds/standalone/urllite-full.js': './lib/complete.js'
       tests:
         files:
           './test/tests.js': './test/tests.litcoffee'
@@ -47,7 +47,7 @@ module.exports = (grunt) ->
         atBegin: true
       lib:
         files: ['src/*.litcoffee', 'src/*.coffee']
-        tasks: ['build:lib']
+        tasks: ['build:node', 'build:standalone']
       tests:
         files: ['test/*.litcoffee', 'test/urls.json']
         tasks: ['build:tests']
@@ -68,8 +68,9 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-browserify'
 
   # Define tasks.
-  grunt.registerTask 'build', ['build:lib', 'build:tests']
-  grunt.registerTask 'build:lib', ['coffee', 'browserify:lib']
+  grunt.registerTask 'build', ['build:node', 'build:standalone', 'build:tests']
+  grunt.registerTask 'build:node', ['coffee']
+  grunt.registerTask 'build:standalone', ['build:node', 'browserify:standalone']
   grunt.registerTask 'build:tests', ['browserify:tests']
   grunt.registerTask 'default', ['build']
   grunt.registerTask 'test', ['build', 'connect:tests', 'mocha']

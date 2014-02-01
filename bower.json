@@ -5,7 +5,7 @@
     "Matthew Tretter <m@tthewwithanm.com>"
   ],
   "description": "A JavaScript URL parser.",
-  "main": "urllite-standalone-full.js",
+  "main": "browser-builds/standalone/urllite-full.js",
   "keywords": [
     "url",
     "parsing",

@@ -29,7 +29,7 @@ url.hash      // "#three"
 ### In the browser
 
 ```html
-<script src="urllite-standalone.js"></script>
+<script src="urllite.js"></script>
 <script>
     var url = urllite('http://u:p@example.com:10/a/b/c?one=1&two=2#three');
 </script>

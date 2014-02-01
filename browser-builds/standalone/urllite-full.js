@@ -4,11 +4,13 @@
 
   urllite = _dereq_('./core');
 
+  _dereq_('./extensions/crap');
+
   module.exports = urllite;
 
 }).call(this);
 
-},{"./core":2}],2:[function(_dereq_,module,exports){
+},{"./core":2,"./extensions/crap":3}],2:[function(_dereq_,module,exports){
 (function() {
   var URL, URL_PATTERN, urllite;
 
@@ -41,6 +43,14 @@
   })();
 
   module.exports = urllite;
+
+}).call(this);
+
+},{}],3:[function(_dereq_,module,exports){
+(function() {
+  module.exports = {
+    monkeys: 5
+  };
 
 }).call(this);
 
