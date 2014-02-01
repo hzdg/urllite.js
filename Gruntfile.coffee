@@ -26,7 +26,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: './src/'
-          src: ['*.litcoffee', '*.coffee']
+          src: ['**/*.litcoffee', '**/*.coffee']
           dest: './lib/'
           rename: coffeeRename
         ]
