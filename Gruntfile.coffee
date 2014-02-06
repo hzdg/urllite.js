@@ -20,7 +20,7 @@ module.exports = (grunt) ->
           './browser-builds/standalone/urllite-full.js': './lib/complete.js'
       tests:
         files:
-          './test/tests.js': './test/tests.litcoffee'
+          './test/tests.js': './test/tests.coffee'
     coffee:
       compile:
         files: [
@@ -49,7 +49,7 @@ module.exports = (grunt) ->
         files: ['src/*.litcoffee', 'src/*.coffee']
         tasks: ['build:node', 'build:standalone']
       tests:
-        files: ['test/*.litcoffee', 'test/urls.json']
+        files: ['test/*.litcoffee', 'test/*.coffee', 'test/urls.json']
         tasks: ['build:tests']
     bump:
       options:
