@@ -2,7 +2,7 @@
 (function() {
   var URL, URL_PATTERN, urllite;
 
-  URL_PATTERN = /^(?:(?:([^:\/?\#]+:)\/+|(\/\/))(?:([a-z0-9-\._~%])(?::([a-z0-9-\._~%]))?@)?(([a-z0-9-\._~%!$&'()*+,;=]+)(?::([0-9]+))?)?)?([^?\#]*?)(\?[^\#]*)?(\#.*)?$/;
+  URL_PATTERN = /^(?:(?:([^:\/?\#]+:)\/+|(\/\/))(?:([a-z0-9-\._~%]+)(?::([a-z0-9-\._~%]+))?@)?(([a-z0-9-\._~%!$&'()*+,;=]+)(?::([0-9]+))?)?)?([^?\#]*?)(\?[^\#]*)?(\#.*)?$/;
 
   urllite = function(raw) {
     return new urllite.URL(raw);
@@ -10,10 +10,10 @@
 
   urllite.URL = URL = (function() {
     function URL(raw) {
-      var isProtocolRelative, m, pathname;
+      var m, pathname;
       m = raw.toString().match(URL_PATTERN);
       this.protocol = m[1] || '';
-      isProtocolRelative = m[2] != null;
+      this.isSchemeRelative = m[2] != null;
       this.username = m[3] || '';
       this.password = m[4] || '';
       this.host = m[5] || '';
@@ -23,8 +23,16 @@
       this.pathname = this.protocol && pathname.charAt(0) !== '/' ? "/" + pathname : pathname;
       this.search = m[9] || '';
       this.hash = m[10] || '';
-      this.origin = "" + this.protocol + "//" + this.host;
+      this.origin = this.protocol ? "" + this.protocol + "//" + this.host : '';
     }
+
+    URL.prototype.toString = function() {
+      var authority, prefix, userinfo;
+      prefix = this.isSchemeRelative ? '//' : this.protocol === 'file:' ? "" + this.protocol + "///" : this.protocol ? "" + this.protocol + "//" : '';
+      userinfo = this.password ? "" + this.username + ":" + this.password : this.username ? "" + this.username : '';
+      authority = userinfo ? "" + userinfo + "@" + this.host : this.host ? "" + this.host : '';
+      return "" + prefix + authority + this.pathname + this.search + this.hash;
+    };
 
     return URL;
 
