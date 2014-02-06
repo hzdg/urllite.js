@@ -13,10 +13,10 @@
         # (                                       # authority
           (?:
             # (                                   # userinfo
-              ([a-z0-9-\._~%])                    # username*
+              ([a-z0-9-\._~%]+)                   # username*
               (?:
                 :
-                ([a-z0-9-\._~%])                  # password*
+                ([a-z0-9-\._~%]+)                 # password*
               )?
             # )
             @
