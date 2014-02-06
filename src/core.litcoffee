@@ -57,7 +57,7 @@
           @pathname = if @protocol and pathname.charAt(0) isnt '/' then "/#{ pathname }" else pathname
           @search = m[9] or ''
           @hash = m[10] or ''
-          @origin = "#{ @protocol }//#{ @host }"
+          @origin = if @protocol then "#{ @protocol }//#{ @host }" else ''
 
         toString: ->
           prefix =
