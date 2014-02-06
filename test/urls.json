@@ -117,5 +117,22 @@
       "hash": "#awesome",
       "origin": "http://www.example.com:10"
     }
+  },
+  {
+    "name": "a root-relative URL",
+    "url": "/a/b/c?dogs=bark&cats=meow#awesome",
+    "stringified": "/a/b/c?dogs=bark&cats=meow#awesome",
+    "URLUtils": {
+      "protocol": "",
+      "username": "",
+      "password": "",
+      "host": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "/a/b/c",
+      "search": "?dogs=bark&cats=meow",
+      "hash": "#awesome",
+      "origin": ""
+    }
   }
 ]
