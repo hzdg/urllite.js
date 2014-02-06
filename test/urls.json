@@ -2,6 +2,7 @@
   {
     "name": "scheme and hostname",
     "url": "http://www.example.com",
+    "stringified": "http://www.example.com/",
     "URLUtils": {
       "protocol": "http:",
       "username": "",
@@ -18,6 +19,7 @@
   {
     "name": "port",
     "url": "http://www.example.com:10",
+    "stringified": "http://www.example.com:10/",
     "URLUtils": {
       "protocol": "http:",
       "username": "",
@@ -34,6 +36,7 @@
   {
     "name": "userinfo",
     "url": "http://user:pass@www.example.com",
+    "stringified": "http://user:pass@www.example.com/",
     "URLUtils": {
       "protocol": "http:",
       "username": "user",
@@ -50,6 +53,7 @@
   {
     "name": "pathname",
     "url": "http://www.example.com/a/b/c",
+    "stringified": "http://www.example.com/a/b/c",
     "URLUtils": {
       "protocol": "http:",
       "username": "",
@@ -66,6 +70,7 @@
   {
     "name": "query string",
     "url": "http://www.example.com?dogs=bark&cats=meow",
+    "stringified": "http://www.example.com/?dogs=bark&cats=meow",
     "URLUtils": {
       "protocol": "http:",
       "username": "",
@@ -82,6 +87,7 @@
   {
     "name": "hashes",
     "url": "http://www.example.com#awesome",
+    "stringified": "http://www.example.com/#awesome",
     "URLUtils": {
       "protocol": "http:",
       "username": "",
@@ -98,6 +104,7 @@
   {
     "name": "a URL with all the parts",
     "url": "http://user:pass@www.example.com:10/a/b/c?dogs=bark&cats=meow#awesome",
+    "stringified": "http://user:pass@www.example.com:10/a/b/c?dogs=bark&cats=meow#awesome",
     "URLUtils": {
       "protocol": "http:",
       "username": "user",

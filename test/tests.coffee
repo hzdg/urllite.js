@@ -9,8 +9,16 @@ urls = require './urls.json'
 testParsing = (url, parts) ->
   assert.deepEqual _.pick(urllite(url), _.keys(parts)...), parts
 
+testStringified = (url, expected) ->
+  assert.equal urllite(url).toString(), expected
+
 
 describe 'urllite', ->
-  for test in urls
-    do (test) ->
-      it "should parse #{ test.name }", -> testParsing test.url, test.URLUtils
+  describe '#constructor', ->
+    for test in urls
+      do (test) ->
+        it "should parse #{ test.name }", -> testParsing test.url, test.URLUtils
+  describe '#toString', ->
+    for test in urls
+      do (test) ->
+        it "should stringify the parsed URL <#{ test.url }>", -> testStringified test.url, test.stringified

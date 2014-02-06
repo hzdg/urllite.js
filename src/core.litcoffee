@@ -47,7 +47,7 @@
         constructor: (raw) ->
           m = raw.toString().match URL_PATTERN
           @protocol = m[1] or ''
-          isProtocolRelative = m[2]?
+          @isSchemeRelative = m[2]?
           @username = m[3] or ''
           @password = m[4] or ''
           @host = m[5] or ''
@@ -58,5 +58,21 @@
           @search = m[9] or ''
           @hash = m[10] or ''
           @origin = "#{ @protocol }//#{ @host }"
+
+        toString: ->
+          prefix =
+            if @isSchemeRelative then '//'
+            else if @protocol is 'file:' then "#{ @protocol }///"
+            else if @protocol then "#{ @protocol }//"
+            else ''
+          userinfo =
+            if @password then "#{ @username }:#{ @password }"
+            else if @username then "#{ @username }"
+            else ''
+          authority =
+            if userinfo then "#{ userinfo }@#{ @host }"
+            else if @host then "#{ @host }"
+            else ''
+          "#{ prefix }#{ authority }#{ @pathname }#{ @search }#{ @hash }"
 
     module.exports = urllite
