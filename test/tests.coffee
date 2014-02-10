@@ -15,10 +15,10 @@ testStringified = (url, expected) ->
 
 describe 'urllite', ->
   describe '#parse', ->
-    for test in urls
+    for test in urls.parsing
       do (test) ->
         it "should parse #{ test.name }", -> testParsing test.url, test.URLUtils
   describe '#toString', ->
-    for test in urls
+    for test in urls.parsing
       do (test) ->
         it "should stringify the parsed URL <#{ test.url }>", -> testStringified test.url, test.stringified
