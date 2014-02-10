@@ -30,6 +30,9 @@
     "type": "git",
     "url": "git://github.com/hzdg/urllite.js.git"
   },
+  "publishConfig": {
+    "registry": "http://npmregistry.hzdg.com/"
+  },
   "keywords": [
     "javascript",
     "browser"
