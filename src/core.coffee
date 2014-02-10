@@ -40,32 +40,37 @@ URL_PATTERN = ///
   $
 ///
 
-urllite = (raw) -> urllite.URL.parse raw
+urllite = (raw, opts) -> urllite.URL.parse raw, opts
 
 urllite.URL =
   class URL
+    constructor: (props) ->
+      for own k, v of props
+        this[k] = v
+
     @parse = (raw) ->
-      url = new URL
       m = raw.toString().match URL_PATTERN
-      url.protocol = m[1] or ''
-      url.username = m[3] or ''
-      url.password = m[4] or ''
-      url.host = m[5] or ''
-      url.hostname = m[6] or ''
-      url.port = m[7] or ''
       pathname = m[8] or ''
-      url.pathname = if url.protocol and pathname.charAt(0) isnt '/' then "/#{ pathname }" else pathname
-      url.search = m[9] or ''
-      url.hash = m[10] or ''
-      url.origin = if url.protocol then "#{ url.protocol }//#{ url.host }" else ''
+      protocol = m[1] or ''
+      host = m[5] or ''
+      props =
+        protocol: protocol
+        username: m[3] or ''
+        password: m[4] or ''
+        host: host
+        hostname: m[6] or ''
+        port: m[7] or ''
+        pathname: if protocol and pathname.charAt(0) isnt '/' then "/#{ pathname }" else pathname
+        search: m[9] or ''
+        hash: m[10] or ''
+        origin: if protocol then "#{ protocol }//#{ host }" else ''
+        isSchemeRelative: m[2]?
 
-      url.isSchemeRelative = m[2]?
-      url.isAbsolutePathRelative = not url.host and url.pathname.charAt(0) is '/'
-      url.isPathRelative = not url.host and url.pathname.charAt(0) isnt '/'
-      url.isRelative = url.isSchemeRelative or url.isAbsolutePathRelative or url.isPathRelative
-      url.isAbsolute = not url.isRelative
-
-      url
+      props.isAbsolutePathRelative = not props.host and props.pathname.charAt(0) is '/'
+      props.isPathRelative = not props.host and props.pathname.charAt(0) isnt '/'
+      props.isRelative = props.isSchemeRelative or props.isAbsolutePathRelative or props.isPathRelative
+      props.isAbsolute = not props.isRelative
+      new urllite.URL props
 
     toString: ->
       prefix =
