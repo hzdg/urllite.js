@@ -136,5 +136,253 @@
         "origin": ""
       }
     }
+  ],
+  "resolve": [
+    {
+      "name": "an absolute URL to another",
+      "url": "http://www.example.com/a/b/c?dogs=bark&cats=meow#awesome",
+      "base": "https://ww2.base.com/d/e/f?search#hash",
+      "expected": {
+        "protocol": "http:",
+        "host": "www.example.com",
+        "hostname": "www.example.com",
+        "pathname": "/a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "http://www.example.com",
+        "isAbsolute": true
+      }
+    },
+    {
+      "name": "a scheme-relative URL to an absolute URL",
+      "url": "//www.example.com/a/b/c?dogs=bark&cats=meow#awesome",
+      "base": "https://ww2.base.com/d/e/f?search#hash",
+      "expected": {
+        "protocol": "https:",
+        "host": "www.example.com",
+        "hostname": "www.example.com",
+        "pathname": "/a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "https://www.example.com",
+        "isSchemeRelative": false,
+        "isAbsolute": true
+      }
+    },
+    {
+      "name": "an absolute path relative URL to an absolute URL",
+      "url": "/a/b/c?dogs=bark&cats=meow#awesome",
+      "base": "https://ww2.base.com/d/e/f?search#hash",
+      "expected": {
+        "protocol": "https:",
+        "host": "ww2.base.com",
+        "hostname": "ww2.base.com",
+        "pathname": "/a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "https://ww2.base.com",
+        "isAbsolutePathRelative": false,
+        "isAbsolute": true
+      }
+    },
+    {
+      "name": "a path relative URL to an absolute URL",
+      "url": "a/b/c?dogs=bark&cats=meow#awesome",
+      "base": "https://ww2.base.com/d/e/f?search#hash",
+      "expected": {
+        "protocol": "https:",
+        "host": "ww2.base.com",
+        "hostname": "ww2.base.com",
+        "pathname": "/d/e/a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "https://ww2.base.com",
+        "isPathRelative": false,
+        "isAbsolute": true
+      }
+    },
+    {
+      "name": "a path relative URL to a base with a trailing slash to an absolute URL",
+      "url": "a/b/c?dogs=bark&cats=meow#awesome",
+      "base": "https://ww2.base.com/d/e/f/?search#hash",
+      "expected": {
+        "protocol": "https:",
+        "host": "ww2.base.com",
+        "hostname": "ww2.base.com",
+        "pathname": "/d/e/f/a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "https://ww2.base.com",
+        "isPathRelative": false,
+        "isAbsolute": true
+      }
+    },
+    {
+      "name": "a path relative URL to an absolute path relative URL",
+      "url": "a/b/c?dogs=bark&cats=meow#awesome",
+      "base": "/d/e/f?search#hash",
+      "expected": {
+        "protocol": "",
+        "host": "",
+        "hostname": "",
+        "pathname": "/d/e/a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "",
+        "isAbsolutePathRelative": true
+      }
+    },
+    {
+      "name": "a scheme-relative URL to an absolute path relative URL",
+      "url": "//www.example.com/a/b/c?dogs=bark&cats=meow#awesome",
+      "base": "/d/e/f?search#hash",
+      "expected": {
+        "protocol": "",
+        "host": "www.example.com",
+        "hostname": "www.example.com",
+        "pathname": "/a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "",
+        "isSchemeRelative": true
+      }
+    },
+    {
+      "name": "an absolute path relative URL to an absolute path relative URL",
+      "url": "/a/b/c?dogs=bark&cats=meow#awesome",
+      "base": "/d/e/f?search#hash",
+      "expected": {
+        "protocol": "",
+        "host": "",
+        "hostname": "",
+        "pathname": "/a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "",
+        "isAbsolutePathRelative": true
+      }
+    },
+    {
+      "name": "a path relative URL to an absolute path relative URL",
+      "url": "a/b/c?dogs=bark&cats=meow#awesome",
+      "base": "/d/e/f?search#hash",
+      "expected": {
+        "protocol": "",
+        "host": "",
+        "hostname": "",
+        "pathname": "/d/e/a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "",
+        "isPathRelative": false,
+        "isAbsolutePathRelative": true
+      }
+    },
+    {
+      "name": "a path relative URL to a base with a trailing slash to an absolute path relative URL",
+      "url": "a/b/c?dogs=bark&cats=meow#awesome",
+      "base": "/d/e/f/?search#hash",
+      "expected": {
+        "protocol": "",
+        "host": "",
+        "hostname": "",
+        "pathname": "/d/e/f/a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "",
+        "isPathRelative": false,
+        "isAbsolutePathRelative": true
+      }
+    },
+    {
+      "name": "a scheme-relative URL to a path relative URL",
+      "url": "//www.example.com/a/b/c?dogs=bark&cats=meow#awesome",
+      "base": "d/e/f?search#hash",
+      "expected": {
+        "protocol": "",
+        "host": "www.example.com",
+        "hostname": "www.example.com",
+        "pathname": "/a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "",
+        "isSchemeRelative": true
+      }
+    },
+    {
+      "name": "an absolute path relative URL to a path relative URL",
+      "url": "/a/b/c?dogs=bark&cats=meow#awesome",
+      "base": "d/e/f?search#hash",
+      "expected": {
+        "protocol": "",
+        "host": "",
+        "hostname": "",
+        "pathname": "/a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "",
+        "isAbsolutePathRelative": true
+      }
+    },
+    {
+      "name": "a path relative URL to a path relative URL",
+      "url": "a/b/c?dogs=bark&cats=meow#awesome",
+      "base": "d/e/f?search#hash",
+      "expected": {
+        "protocol": "",
+        "host": "",
+        "hostname": "",
+        "pathname": "d/e/a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "",
+        "isPathRelative": true
+      }
+    },
+    {
+      "name": "a path relative URL to a path relative base with a trailing slash",
+      "url": "a/b/c?dogs=bark&cats=meow#awesome",
+      "base": "d/e/f/?search#hash",
+      "expected": {
+        "protocol": "",
+        "host": "",
+        "hostname": "",
+        "pathname": "d/e/f/a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "",
+        "isPathRelative": true
+      }
+    },
+    {
+      "name": "path traversals to path relative URLs",
+      "url": "../../../c?dogs=bark&cats=meow#awesome",
+      "base": "d/e/f/?search#hash",
+      "expected": {
+        "protocol": "",
+        "host": "",
+        "hostname": "",
+        "pathname": "c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "",
+        "isPathRelative": true
+      }
+    },
+    {
+      "name": "path traversals to path relative URLs",
+      "url": "../../../../c?dogs=bark&cats=meow#awesome",
+      "base": "d/e/f/?search#hash",
+      "expected": {
+        "protocol": "",
+        "host": "",
+        "hostname": "",
+        "pathname": "../c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": "",
+        "isPathRelative": true
+      }
+    }
   ]
 }

@@ -1,5 +1,5 @@
 # Load the core, then every extension.
 
 urllite = require './core'
-# require './extensions/blah'
+require './extensions/resolve'
 module.exports = urllite
