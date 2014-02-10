@@ -1,9 +1,13 @@
 urllite.js
 ==========
 
-urllite is a URL parser for nodejs and the browser. Its main goal is to be tiny
-enough to be bundled with browser builds of JS libraries so your users don't
-have to understand dependency management to use your library.
+urllite is a URL parser for nodejs and the browser. It's meant to be a
+replacement for [URL decomposition IDL attributes][1]—especially when you want
+to support non-browser environments like node. Its main goal is to be tiny
+enough to be bundled with browser builds of JS libraries.
+
+urllite is designed to be modular so that you can include only the parts you
+need. For example, URL resolution is a separate extension.
 
 Its core API is based on the [URLUtils] interface (the properties of "a"
 HTMLElements and `window.location`):
@@ -51,5 +55,28 @@ var url = urllite('http://u:p@example.com:10/a/b/c?one=1&two=2#three');
 You can compile urllite into your own libraries using a tool like [browserify].
 
 
+## API
+
+The `urllite` function is the main entry point. Use it to parse a URL:
+
+```javascript
+var url = urllite('http://example.com');
+console.log(url.host);  // => "example.com"
+```
+
+
+### `resolve()`
+
+The `resolve()` method is available via an extension. In node, all extensions
+are available by default. For the browser, you can require extensions
+selectively and create custom builds with only the extensions you need.
+
+```javascript
+var url = urllite('dogs/are/awesome');
+console.log(url.resolve('http://animals.com').toString());  // => "http://animals.com/dogs/are/awesome"
+```
+
+
+[1]: http://www.w3.org/TR/url/#the-url-decomposition-idl-attributes
 [URLUtils]: https://developer.mozilla.org/en-US/docs/Web/API/URLUtils
 [browserify]: http://browserify.org
