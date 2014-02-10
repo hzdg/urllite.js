@@ -31,6 +31,7 @@ module.exports = (grunt) ->
           reporter: 'Spec'
           clearRequireCache: true
           require: 'coffee-script/register'
+          grep: grunt.option 'grep'
         src: ['test/**/*.coffee', 'test/**/*.litcoffee']
     watch:
       options:
