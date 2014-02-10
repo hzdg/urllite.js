@@ -14,7 +14,7 @@ testStringified = (url, expected) ->
 
 
 describe 'urllite', ->
-  describe '#constructor', ->
+  describe '#parse', ->
     for test in urls
       do (test) ->
         it "should parse #{ test.name }", -> testParsing test.url, test.URLUtils

@@ -40,24 +40,32 @@ URL_PATTERN = ///
   $
 ///
 
-urllite = (raw) -> new urllite.URL raw
+urllite = (raw) -> urllite.URL.parse raw
 
 urllite.URL =
   class URL
-    constructor: (raw) ->
+    @parse = (raw) ->
+      url = new URL
       m = raw.toString().match URL_PATTERN
-      @protocol = m[1] or ''
-      @isSchemeRelative = m[2]?
-      @username = m[3] or ''
-      @password = m[4] or ''
-      @host = m[5] or ''
-      @hostname = m[6] or ''
-      @port = m[7] or ''
+      url.protocol = m[1] or ''
+      url.username = m[3] or ''
+      url.password = m[4] or ''
+      url.host = m[5] or ''
+      url.hostname = m[6] or ''
+      url.port = m[7] or ''
       pathname = m[8] or ''
-      @pathname = if @protocol and pathname.charAt(0) isnt '/' then "/#{ pathname }" else pathname
-      @search = m[9] or ''
-      @hash = m[10] or ''
-      @origin = if @protocol then "#{ @protocol }//#{ @host }" else ''
+      url.pathname = if url.protocol and pathname.charAt(0) isnt '/' then "/#{ pathname }" else pathname
+      url.search = m[9] or ''
+      url.hash = m[10] or ''
+      url.origin = if url.protocol then "#{ url.protocol }//#{ url.host }" else ''
+
+      url.isSchemeRelative = m[2]?
+      url.isAbsolutePathRelative = not url.host and url.pathname.charAt(0) is '/'
+      url.isPathRelative = not url.host and url.pathname.charAt(0) isnt '/'
+      url.isRelative = url.isSchemeRelative or url.isAbsolutePathRelative or url.isPathRelative
+      url.isAbsolute = not url.isRelative
+
+      url
 
     toString: ->
       prefix =
