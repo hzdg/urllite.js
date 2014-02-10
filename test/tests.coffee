@@ -1,8 +1,6 @@
 {assert} = require 'chai'
 _ = require 'underscore'
-
-# Use the global urllite
-urllite = window.urllite
+urllite = require '../src/complete'
 urls = require './urls.json'
 
 

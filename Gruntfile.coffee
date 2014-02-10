@@ -1,7 +1,5 @@
 module.exports = (grunt) ->
 
-  TEST_SERVER_PORT = 4000
-
   # Used instead of "ext" to accommodate filenames with dots. Lots of talk all
   # over GitHub, including here: https://github.com/gruntjs/grunt/pull/750
   coffeeRename = (dest, src) -> "#{ dest }#{ src.replace /\.(lit)?coffee$/, '.js' }"
@@ -18,9 +16,6 @@ module.exports = (grunt) ->
         files:
           './browser-builds/standalone/urllite.js': './lib/core.js'
           './browser-builds/standalone/urllite-full.js': './lib/complete.js'
-      tests:
-        files:
-          './test/tests.js': './test/tests.coffee'
     coffee:
       compile:
         files: [
@@ -30,27 +25,19 @@ module.exports = (grunt) ->
           dest: './lib/'
           rename: coffeeRename
         ]
-    connect:
-      tests:
+    mochaTest:
+      test:
         options:
-          port: TEST_SERVER_PORT
-          base: '.'
-    mocha:
-      all:
-        options:
-          run: true
-          log: true
           reporter: 'Spec'
-          urls: ["http://localhost:#{ TEST_SERVER_PORT }/test/index.html"]
+          clearRequireCache: true
+          require: 'coffee-script/register'
+        src: ['test/**/*.coffee', 'test/**/*.litcoffee']
     watch:
       options:
         atBegin: true
       lib:
         files: ['src/*.litcoffee', 'src/*.coffee']
         tasks: ['build:node', 'build:standalone']
-      tests:
-        files: ['test/*.litcoffee', 'test/*.coffee', 'test/urls.json']
-        tasks: ['build:tests']
     bump:
       options:
         files: ['package.json', 'bower.json']
@@ -62,15 +49,13 @@ module.exports = (grunt) ->
   # Load grunt plugins
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-watch'
-  grunt.loadNpmTasks 'grunt-contrib-connect'
-  grunt.loadNpmTasks 'grunt-mocha'
+  grunt.loadNpmTasks 'grunt-mocha-test'
   grunt.loadNpmTasks 'grunt-bump'
   grunt.loadNpmTasks 'grunt-browserify'
 
   # Define tasks.
-  grunt.registerTask 'build', ['build:node', 'build:standalone', 'build:tests']
+  grunt.registerTask 'build', ['build:node', 'build:standalone']
   grunt.registerTask 'build:node', ['coffee']
   grunt.registerTask 'build:standalone', ['build:node', 'browserify:standalone']
-  grunt.registerTask 'build:tests', ['browserify:tests']
   grunt.registerTask 'default', ['build']
-  grunt.registerTask 'test', ['build', 'connect:tests', 'mocha']
+  grunt.registerTask 'test', ['mochaTest']
