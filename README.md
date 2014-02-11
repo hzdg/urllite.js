@@ -64,16 +64,29 @@ var url = urllite('http://example.com');
 console.log(url.host);  // => "example.com"
 ```
 
+All URL methods (other than `toString()`) are available as extensions. In node,
+all extensions are available by default. For the browser, you can require
+extensions selectively and create custom builds with only the extensions you
+need.
+
 
 ### `resolve()`
 
-The `resolve()` method is available via an extension. In node, all extensions
-are available by default. For the browser, you can require extensions
-selectively and create custom builds with only the extensions you need.
+Resolves the URL to the given base.
 
 ```javascript
 var url = urllite('dogs/are/awesome');
 console.log(url.resolve('http://animals.com').toString());  // => "http://animals.com/dogs/are/awesome"
+```
+
+
+### `relativize()`
+
+Returns a new URL which is a relative to the provided URL.
+
+```javascript
+var url = urllite('http://animals.com/dogs/are/awesome');
+console.log(url.relativize('http://animals.com').toString());  // => "dogs/are/awesome"
 ```
 
 
