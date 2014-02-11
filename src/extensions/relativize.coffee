@@ -29,19 +29,7 @@ URL::relativize = (other) ->
       else if newSegments[0] is '' then ['.']
       else newSegments
 
-  new urllite.URL
-    protocol: ''
-    username: ''
-    password: ''
-    host: ''
-    hostname: ''
-    port: ''
+  urllite._createURL
     pathname: newSegments.join '/'
     search: url.search
     hash: url.hash
-    origin: ''
-    isSchemeRelative: false
-    isAbsolutePathRelative: false
-    isPathRelative: true
-    isRelative: true
-    isAbsolute: false

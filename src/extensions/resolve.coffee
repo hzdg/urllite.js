@@ -37,10 +37,4 @@ URL::resolve = (base) ->
       else
         @pathname
 
-  p.origin = if p.protocol then "#{ p.protocol }//#{ p.host }" else ''
-  p.isAbsolutePathRelative = not p.host and p.pathname.charAt(0) is '/'
-  p.isPathRelative = not p.host and p.pathname.charAt(0) isnt '/'
-  p.isRelative = p.isSchemeRelative or p.isAbsolutePathRelative or p.isPathRelative
-  p.isAbsolute = not p.isRelative
-
-  new URL(p).normalize()
+  urllite._createURL(p).normalize()
