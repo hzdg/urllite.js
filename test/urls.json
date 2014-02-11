@@ -1,10 +1,10 @@
 {
-  "parsing": [
+  "parse": [
     {
       "name": "scheme and hostname",
       "url": "http://www.example.com",
       "stringified": "http://www.example.com/",
-      "URLUtils": {
+      "expected": {
         "protocol": "http:",
         "username": "",
         "password": "",
@@ -21,7 +21,7 @@
       "name": "port",
       "url": "http://www.example.com:10",
       "stringified": "http://www.example.com:10/",
-      "URLUtils": {
+      "expected": {
         "protocol": "http:",
         "username": "",
         "password": "",
@@ -38,7 +38,7 @@
       "name": "userinfo",
       "url": "http://user:pass@www.example.com",
       "stringified": "http://user:pass@www.example.com/",
-      "URLUtils": {
+      "expected": {
         "protocol": "http:",
         "username": "user",
         "password": "pass",
@@ -55,7 +55,7 @@
       "name": "pathname",
       "url": "http://www.example.com/a/b/c",
       "stringified": "http://www.example.com/a/b/c",
-      "URLUtils": {
+      "expected": {
         "protocol": "http:",
         "username": "",
         "password": "",
@@ -72,7 +72,7 @@
       "name": "query string",
       "url": "http://www.example.com?dogs=bark&cats=meow",
       "stringified": "http://www.example.com/?dogs=bark&cats=meow",
-      "URLUtils": {
+      "expected": {
         "protocol": "http:",
         "username": "",
         "password": "",
@@ -89,7 +89,7 @@
       "name": "hashes",
       "url": "http://www.example.com#awesome",
       "stringified": "http://www.example.com/#awesome",
-      "URLUtils": {
+      "expected": {
         "protocol": "http:",
         "username": "",
         "password": "",
@@ -106,7 +106,7 @@
       "name": "a URL with all the parts",
       "url": "http://user:pass@www.example.com:10/a/b/c?dogs=bark&cats=meow#awesome",
       "stringified": "http://user:pass@www.example.com:10/a/b/c?dogs=bark&cats=meow#awesome",
-      "URLUtils": {
+      "expected": {
         "protocol": "http:",
         "username": "user",
         "password": "pass",
@@ -123,7 +123,7 @@
       "name": "a root-relative URL",
       "url": "/a/b/c?dogs=bark&cats=meow#awesome",
       "stringified": "/a/b/c?dogs=bark&cats=meow#awesome",
-      "URLUtils": {
+      "expected": {
         "protocol": "",
         "username": "",
         "password": "",

@@ -19,11 +19,11 @@ testRelativize = (url, other, expected) ->
 
 describe 'urllite', ->
   describe '#parse', ->
-    for test in urls.parsing
+    for test in urls.parse
       do (test) ->
-        it "should parse #{ test.name }", -> testParsing test.url, test.URLUtils
+        it "should parse #{ test.name }", -> testParsing test.url, test.expected
   describe '#toString', ->
-    for test in urls.parsing
+    for test in urls.parse
       do (test) ->
         it "should stringify the parsed URL <#{ test.url }>", -> testStringified test.url, test.stringified
   describe '#resolve', ->
