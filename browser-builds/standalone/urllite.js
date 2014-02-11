@@ -1,47 +1,7 @@
-!function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.urllite=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
-(function() {
-  var URL, URL_PATTERN, urllite;
-
-  URL_PATTERN = /^(?:(?:([^:\/?\#]+:)\/+|(\/\/))(?:([a-z0-9-\._~%]+)(?::([a-z0-9-\._~%]+))?@)?(([a-z0-9-\._~%!$&'()*+,;=]+)(?::([0-9]+))?)?)?([^?\#]*?)(\?[^\#]*)?(\#.*)?$/;
-
-  urllite = function(raw) {
-    return new urllite.URL(raw);
-  };
-
-  urllite.URL = URL = (function() {
-    function URL(raw) {
-      var m, pathname;
-      m = raw.toString().match(URL_PATTERN);
-      this.protocol = m[1] || '';
-      this.isSchemeRelative = m[2] != null;
-      this.username = m[3] || '';
-      this.password = m[4] || '';
-      this.host = m[5] || '';
-      this.hostname = m[6] || '';
-      this.port = m[7] || '';
-      pathname = m[8] || '';
-      this.pathname = this.protocol && pathname.charAt(0) !== '/' ? "/" + pathname : pathname;
-      this.search = m[9] || '';
-      this.hash = m[10] || '';
-      this.origin = this.protocol ? "" + this.protocol + "//" + this.host : '';
-    }
-
-    URL.prototype.toString = function() {
-      var authority, prefix, userinfo;
-      prefix = this.isSchemeRelative ? '//' : this.protocol === 'file:' ? "" + this.protocol + "///" : this.protocol ? "" + this.protocol + "//" : '';
-      userinfo = this.password ? "" + this.username + ":" + this.password : this.username ? "" + this.username : '';
-      authority = userinfo ? "" + userinfo + "@" + this.host : this.host ? "" + this.host : '';
-      return "" + prefix + authority + this.pathname + this.search + this.hash;
-    };
-
-    return URL;
-
-  })();
-
-  module.exports = urllite;
-
-}).call(this);
-
-},{}]},{},[1])
-(1)
-});
+(function(){var t,e,s,a,o=[].slice,h={}.hasOwnProperty
+e=/^(?:(?:([^:\/?\#]+:)\/+|(\/\/))(?:([a-z0-9-\._~%]+)(?::([a-z0-9-\._~%]+))?@)?(([a-z0-9-\._~%!$&'()*+,;=]+)(?::([0-9]+))?)?)?([^?\#]*?)(\?[^\#]*)?(\#.*)?$/,a=function(t,e){return a.URL.parse(t,e)},s={protocol:"",username:"",password:"",host:"",hostname:"",port:"",pathname:"",search:"",hash:"",origin:"",isSchemeRelative:!1,isAbsolutePathRelative:!1,isPathRelative:!1,isRelative:!1,isAbsolute:!1},a._createURL=function(){var t,e,i,r,n,l,c,u,p
+for(e=1<=arguments.length?o.call(arguments,0):[],r={},l=0,c=e.length;c>l;l++){t=e[l]
+for(i in s)h.call(s,i)&&(n=s[i],r[i]=null!=(u=null!=(p=t[i])?p:r[i])?u:n)}return r.host=r.hostname&&r.port?""+r.hostname+":"+r.port:r.hostname?r.hostname:"",r.origin=r.protocol?""+r.protocol+"//"+r.host:"",r.isAbsolutePathRelative=!r.host&&"/"===r.pathname.charAt(0),r.isPathRelative=!r.host&&"/"!==r.pathname.charAt(0),r.isRelative=r.isSchemeRelative||r.isAbsolutePathRelative||r.isPathRelative,r.isAbsolute=!r.isRelative,new a.URL(r)},a.URL=t=function(){function t(t){var e,s
+for(e in t)h.call(t,e)&&(s=t[e],this[e]=s)}return t.parse=function(t){var s,o,h
+return s=(""+t).match(e),o=s[8]||"",h=s[1],a._createURL({protocol:h,username:s[3],password:s[4],hostname:s[6],port:s[7],pathname:h&&"/"!==o.charAt(0)?"/"+o:o,search:s[9],hash:s[10],isSchemeRelative:null!=s[2]})},t.prototype.toString=function(){var t,e,s
+return e=this.isSchemeRelative?"//":"file:"===this.protocol?""+this.protocol+"///":this.protocol?""+this.protocol+"//":"",s=this.password?""+this.username+":"+this.password:this.username?""+this.username:"",t=s?""+s+"@"+this.host:this.host?""+this.host:"",""+e+t+this.pathname+this.search+this.hash},t}(),module.exports=a}).call(this)
