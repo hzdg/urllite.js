@@ -37,15 +37,10 @@ URL::resolve = (base) ->
       else
         @pathname
 
-  while m = /^(.*?)[^\/]+\/\.\.\/*(.*)$/.exec p.pathname
-    p.pathname = "#{ m[1] }#{ m[2] }"
-
-  if p.host and p.pathname.indexOf('..') isnt -1 then throw new Error 'Path is behind root.'
-
   p.origin = if p.protocol then "#{ p.protocol }//#{ p.host }" else ''
   p.isAbsolutePathRelative = not p.host and p.pathname.charAt(0) is '/'
   p.isPathRelative = not p.host and p.pathname.charAt(0) isnt '/'
   p.isRelative = p.isSchemeRelative or p.isAbsolutePathRelative or p.isPathRelative
   p.isAbsolute = not p.isRelative
 
-  new URL p
+  new URL(p).normalize()

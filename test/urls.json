@@ -1,4 +1,18 @@
 {
+  "normalize": [
+    {
+      "name": "traversal segments",
+      "url": "http://www.example.com/a/b/../../c",
+      "expected": {
+        "pathname": "/c"
+      }
+    },
+    {
+      "name": "traversing behind the root",
+      "url": "http://www.example.com/a/b/../../../c",
+      "error": "behind root"
+    }
+  ],
   "parse": [
     {
       "name": "scheme and hostname",

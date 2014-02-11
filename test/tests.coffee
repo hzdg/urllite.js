@@ -17,6 +17,9 @@ testResolve = (url, base, expected) ->
 testRelativize = (url, other, expected) ->
   assert.deepEqual _.pick(urllite(url).relativize(other), _.keys(expected)), expected
 
+testNormalize = (url, expected) ->
+  assert.deepEqual _.pick(urllite(url).normalize(), _.keys(expected)), expected
+
 describe 'urllite', ->
   describe '#parse', ->
     for test in urls.parse
@@ -26,6 +29,15 @@ describe 'urllite', ->
     for test in urls.parse
       do (test) ->
         it "should stringify the parsed URL <#{ test.url }>", -> testStringified test.url, test.stringified
+  describe '#normalize', ->
+    for test in urls.normalize
+      do (test) ->
+        if test.error
+          it "should error normalizing #{ test.name } (<#{ test.url }>)", ->
+            assertThrows test.error, -> urllite(test.url).normalize()
+        else
+          it "should correctly normalize #{ test.name } (<#{ test.url }>)", ->
+            testNormalize test.url, test.expected
   describe '#resolve', ->
     for test in urls.resolve
       do (test) ->
