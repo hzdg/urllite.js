@@ -384,5 +384,206 @@
         "isPathRelative": true
       }
     }
+  ],
+  "relativize": [
+    {
+      "name": "one absolute URL to another",
+      "url": "http://www.example.com:10/a/b/c?dogs=bark&cats=meow#awesome",
+      "other": "http://www.example.com:10/d/e/f?search#hash",
+      "expected": {
+        "protocol": "",
+        "username": "",
+        "password": "",
+        "host": "",
+        "hostname": "",
+        "port": "",
+        "pathname": "../../a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": ""
+      }
+    },
+    {
+      "name": "one absolute path relative URL to another",
+      "url": "/a/b/c?dogs=bark&cats=meow#awesome",
+      "other": "/d/e/f?search#hash",
+      "expected": {
+        "protocol": "",
+        "username": "",
+        "password": "",
+        "host": "",
+        "hostname": "",
+        "port": "",
+        "pathname": "../../a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": ""
+      }
+    },
+    {
+      "name": "one absolute path relative URL to itself",
+      "url": "/a/b/c?dogs=bark&cats=meow#awesome",
+      "other": "/a/b/c?dogs=bark&cats=meow#awesome",
+      "expected": {
+        "protocol": "",
+        "username": "",
+        "password": "",
+        "host": "",
+        "hostname": "",
+        "port": "",
+        "pathname": "",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": ""
+      }
+    },
+    {
+      "name": "one absolute path relative URL to itself (with trailing slashes)",
+      "url": "/a/b/c/?dogs=bark&cats=meow#awesome",
+      "other": "/a/b/c/?dogs=bark&cats=meow#awesome",
+      "expected": {
+        "protocol": "",
+        "username": "",
+        "password": "",
+        "host": "",
+        "hostname": "",
+        "port": "",
+        "pathname": "",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": ""
+      }
+    },
+    {
+      "name": "one absolute path relative URL to another (with a common base)",
+      "url": "/a/b/c?dogs=bark&cats=meow#awesome",
+      "other": "/a/b?search#hash",
+      "expected": {
+        "protocol": "",
+        "username": "",
+        "password": "",
+        "host": "",
+        "hostname": "",
+        "port": "",
+        "pathname": "b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": ""
+      }
+    },
+    {
+      "name": "one absolute path relative URL to another (with a common base but different leaf)",
+      "url": "/a/b/c?dogs=bark&cats=meow#awesome",
+      "other": "/a/x?search#hash",
+      "expected": {
+        "protocol": "",
+        "username": "",
+        "password": "",
+        "host": "",
+        "hostname": "",
+        "port": "",
+        "pathname": "b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": ""
+      }
+    },
+    {
+      "name": "one absolute path relative URL to another (with a common base and trailing slash)",
+      "url": "/a/b/c?dogs=bark&cats=meow#awesome",
+      "other": "/a/b/?search#hash",
+      "expected": {
+        "protocol": "",
+        "username": "",
+        "password": "",
+        "host": "",
+        "hostname": "",
+        "port": "",
+        "pathname": "c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": ""
+      }
+    },
+    {
+      "name": "one absolute path relative URL to another (for which it's is a common base)",
+      "url": "/a/b?dogs=bark&cats=meow#awesome",
+      "other": "/a/b/c?search#hash",
+      "expected": {
+        "protocol": "",
+        "username": "",
+        "password": "",
+        "host": "",
+        "hostname": "",
+        "port": "",
+        "pathname": "../b",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": ""
+      }
+    },
+    {
+      "name": "one absolute path relative URL to another with a trailing slash (for which it's is a common base)",
+      "url": "/a/b/?dogs=bark&cats=meow#awesome",
+      "other": "/a/b/c?search#hash",
+      "expected": {
+        "protocol": "",
+        "username": "",
+        "password": "",
+        "host": "",
+        "hostname": "",
+        "port": "",
+        "pathname": ".",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": ""
+      }
+    },
+    {
+      "name": "one absolute path relative URL (without a trailing slash) to another (with)",
+      "url": "/a/b/c?dogs=bark&cats=meow#awesome",
+      "other": "/d/e/f/?search#hash",
+      "expected": {
+        "protocol": "",
+        "username": "",
+        "password": "",
+        "host": "",
+        "hostname": "",
+        "port": "",
+        "pathname": "../../../a/b/c",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": ""
+      }
+    },
+    {
+      "name": "one absolute path relative URL (with a trailing slash) to another (without)",
+      "url": "/a/b/c/?dogs=bark&cats=meow#awesome",
+      "other": "/d/e/f?search#hash",
+      "expected": {
+        "protocol": "",
+        "username": "",
+        "password": "",
+        "host": "",
+        "hostname": "",
+        "port": "",
+        "pathname": "../../a/b/c/",
+        "search": "?dogs=bark&cats=meow",
+        "hash": "#awesome",
+        "origin": ""
+      }
+    },
+    {
+      "name": "one absolute URL to absolute path relative URL",
+      "url": "http://www.example.com:10/a/b/c?dogs=bark&cats=meow#awesome",
+      "other": "/d/e/f?search#hash",
+      "error": "Origins don't match"
+    },
+    {
+      "name": "one absolute URL to relative URL",
+      "url": "http://www.example.com:10/a/b/c?dogs=bark&cats=meow#awesome",
+      "other": "d/e/f?search#hash",
+      "error": "Origins don't match"
+    }
   ]
 }
