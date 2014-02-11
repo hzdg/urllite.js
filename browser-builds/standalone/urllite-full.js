@@ -17,52 +17,13 @@
 },{"./core":2,"./extensions/normalize":3,"./extensions/relativize":4,"./extensions/resolve":5}],2:[function(_dereq_,module,exports){
 (function() {
   var URL, URL_PATTERN, defaults, urllite,
-    __slice = [].slice,
-    __hasProp = {}.hasOwnProperty;
+    __hasProp = {}.hasOwnProperty,
+    __slice = [].slice;
 
   URL_PATTERN = /^(?:(?:([^:\/?\#]+:)\/+|(\/\/))(?:([a-z0-9-\._~%]+)(?::([a-z0-9-\._~%]+))?@)?(([a-z0-9-\._~%!$&'()*+,;=]+)(?::([0-9]+))?)?)?([^?\#]*?)(\?[^\#]*)?(\#.*)?$/;
 
   urllite = function(raw, opts) {
     return urllite.URL.parse(raw, opts);
-  };
-
-  defaults = {
-    protocol: '',
-    username: '',
-    password: '',
-    host: '',
-    hostname: '',
-    port: '',
-    pathname: '',
-    search: '',
-    hash: '',
-    origin: '',
-    isSchemeRelative: false,
-    isAbsolutePathRelative: false,
-    isPathRelative: false,
-    isRelative: false,
-    isAbsolute: false
-  };
-
-  urllite._createURL = function() {
-    var base, bases, k, props, v, _i, _len, _ref, _ref1;
-    bases = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-    props = {};
-    for (_i = 0, _len = bases.length; _i < _len; _i++) {
-      base = bases[_i];
-      for (k in defaults) {
-        if (!__hasProp.call(defaults, k)) continue;
-        v = defaults[k];
-        props[k] = (_ref = (_ref1 = base[k]) != null ? _ref1 : props[k]) != null ? _ref : v;
-      }
-    }
-    props.host = props.hostname && props.port ? "" + props.hostname + ":" + props.port : props.hostname ? props.hostname : '';
-    props.origin = props.protocol ? "" + props.protocol + "//" + props.host : '';
-    props.isAbsolutePathRelative = !props.host && props.pathname.charAt(0) === '/';
-    props.isPathRelative = !props.host && props.pathname.charAt(0) !== '/';
-    props.isRelative = props.isSchemeRelative || props.isAbsolutePathRelative || props.isPathRelative;
-    props.isAbsolute = !props.isRelative;
-    return new urllite.URL(props);
   };
 
   urllite.URL = URL = (function() {
@@ -104,6 +65,41 @@
     return URL;
 
   })();
+
+  defaults = {
+    protocol: '',
+    username: '',
+    password: '',
+    host: '',
+    hostname: '',
+    port: '',
+    pathname: '',
+    search: '',
+    hash: '',
+    origin: '',
+    isSchemeRelative: false
+  };
+
+  urllite._createURL = function() {
+    var base, bases, k, props, v, _i, _len, _ref, _ref1;
+    bases = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    props = {};
+    for (_i = 0, _len = bases.length; _i < _len; _i++) {
+      base = bases[_i];
+      for (k in defaults) {
+        if (!__hasProp.call(defaults, k)) continue;
+        v = defaults[k];
+        props[k] = (_ref = (_ref1 = base[k]) != null ? _ref1 : props[k]) != null ? _ref : v;
+      }
+    }
+    props.host = props.hostname && props.port ? "" + props.hostname + ":" + props.port : props.hostname ? props.hostname : '';
+    props.origin = props.protocol ? "" + props.protocol + "//" + props.host : '';
+    props.isAbsolutePathRelative = !props.host && props.pathname.charAt(0) === '/';
+    props.isPathRelative = !props.host && props.pathname.charAt(0) !== '/';
+    props.isRelative = props.isSchemeRelative || props.isAbsolutePathRelative || props.isPathRelative;
+    props.isAbsolute = !props.isRelative;
+    return new urllite.URL(props);
+  };
 
   module.exports = urllite;
 

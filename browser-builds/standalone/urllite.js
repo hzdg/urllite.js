@@ -1,7 +1,94 @@
-(function(){var t,e,s,a,o=[].slice,h={}.hasOwnProperty
-e=/^(?:(?:([^:\/?\#]+:)\/+|(\/\/))(?:([a-z0-9-\._~%]+)(?::([a-z0-9-\._~%]+))?@)?(([a-z0-9-\._~%!$&'()*+,;=]+)(?::([0-9]+))?)?)?([^?\#]*?)(\?[^\#]*)?(\#.*)?$/,a=function(t,e){return a.URL.parse(t,e)},s={protocol:"",username:"",password:"",host:"",hostname:"",port:"",pathname:"",search:"",hash:"",origin:"",isSchemeRelative:!1,isAbsolutePathRelative:!1,isPathRelative:!1,isRelative:!1,isAbsolute:!1},a._createURL=function(){var t,e,i,r,n,l,c,u,p
-for(e=1<=arguments.length?o.call(arguments,0):[],r={},l=0,c=e.length;c>l;l++){t=e[l]
-for(i in s)h.call(s,i)&&(n=s[i],r[i]=null!=(u=null!=(p=t[i])?p:r[i])?u:n)}return r.host=r.hostname&&r.port?""+r.hostname+":"+r.port:r.hostname?r.hostname:"",r.origin=r.protocol?""+r.protocol+"//"+r.host:"",r.isAbsolutePathRelative=!r.host&&"/"===r.pathname.charAt(0),r.isPathRelative=!r.host&&"/"!==r.pathname.charAt(0),r.isRelative=r.isSchemeRelative||r.isAbsolutePathRelative||r.isPathRelative,r.isAbsolute=!r.isRelative,new a.URL(r)},a.URL=t=function(){function t(t){var e,s
-for(e in t)h.call(t,e)&&(s=t[e],this[e]=s)}return t.parse=function(t){var s,o,h
-return s=(""+t).match(e),o=s[8]||"",h=s[1],a._createURL({protocol:h,username:s[3],password:s[4],hostname:s[6],port:s[7],pathname:h&&"/"!==o.charAt(0)?"/"+o:o,search:s[9],hash:s[10],isSchemeRelative:null!=s[2]})},t.prototype.toString=function(){var t,e,s
-return e=this.isSchemeRelative?"//":"file:"===this.protocol?""+this.protocol+"///":this.protocol?""+this.protocol+"//":"",s=this.password?""+this.username+":"+this.password:this.username?""+this.username:"",t=s?""+s+"@"+this.host:this.host?""+this.host:"",""+e+t+this.pathname+this.search+this.hash},t}(),module.exports=a}).call(this)
+!function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.urllite=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+(function() {
+  var URL, URL_PATTERN, defaults, urllite,
+    __hasProp = {}.hasOwnProperty,
+    __slice = [].slice;
+
+  URL_PATTERN = /^(?:(?:([^:\/?\#]+:)\/+|(\/\/))(?:([a-z0-9-\._~%]+)(?::([a-z0-9-\._~%]+))?@)?(([a-z0-9-\._~%!$&'()*+,;=]+)(?::([0-9]+))?)?)?([^?\#]*?)(\?[^\#]*)?(\#.*)?$/;
+
+  urllite = function(raw, opts) {
+    return urllite.URL.parse(raw, opts);
+  };
+
+  urllite.URL = URL = (function() {
+    function URL(props) {
+      var k, v;
+      for (k in props) {
+        if (!__hasProp.call(props, k)) continue;
+        v = props[k];
+        this[k] = v;
+      }
+    }
+
+    URL.parse = function(raw) {
+      var m, pathname, protocol;
+      m = raw.toString().match(URL_PATTERN);
+      pathname = m[8] || '';
+      protocol = m[1];
+      return urllite._createURL({
+        protocol: protocol,
+        username: m[3],
+        password: m[4],
+        hostname: m[6],
+        port: m[7],
+        pathname: protocol && pathname.charAt(0) !== '/' ? "/" + pathname : pathname,
+        search: m[9],
+        hash: m[10],
+        isSchemeRelative: m[2] != null
+      });
+    };
+
+    URL.prototype.toString = function() {
+      var authority, prefix, userinfo;
+      prefix = this.isSchemeRelative ? '//' : this.protocol === 'file:' ? "" + this.protocol + "///" : this.protocol ? "" + this.protocol + "//" : '';
+      userinfo = this.password ? "" + this.username + ":" + this.password : this.username ? "" + this.username : '';
+      authority = userinfo ? "" + userinfo + "@" + this.host : this.host ? "" + this.host : '';
+      return "" + prefix + authority + this.pathname + this.search + this.hash;
+    };
+
+    return URL;
+
+  })();
+
+  defaults = {
+    protocol: '',
+    username: '',
+    password: '',
+    host: '',
+    hostname: '',
+    port: '',
+    pathname: '',
+    search: '',
+    hash: '',
+    origin: '',
+    isSchemeRelative: false
+  };
+
+  urllite._createURL = function() {
+    var base, bases, k, props, v, _i, _len, _ref, _ref1;
+    bases = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    props = {};
+    for (_i = 0, _len = bases.length; _i < _len; _i++) {
+      base = bases[_i];
+      for (k in defaults) {
+        if (!__hasProp.call(defaults, k)) continue;
+        v = defaults[k];
+        props[k] = (_ref = (_ref1 = base[k]) != null ? _ref1 : props[k]) != null ? _ref : v;
+      }
+    }
+    props.host = props.hostname && props.port ? "" + props.hostname + ":" + props.port : props.hostname ? props.hostname : '';
+    props.origin = props.protocol ? "" + props.protocol + "//" + props.host : '';
+    props.isAbsolutePathRelative = !props.host && props.pathname.charAt(0) === '/';
+    props.isPathRelative = !props.host && props.pathname.charAt(0) !== '/';
+    props.isRelative = props.isSchemeRelative || props.isAbsolutePathRelative || props.isPathRelative;
+    props.isAbsolute = !props.isRelative;
+    return new urllite.URL(props);
+  };
+
+  module.exports = urllite;
+
+}).call(this);
+
+},{}]},{},[1])
+(1)
+});
