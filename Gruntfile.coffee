@@ -21,7 +21,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: './src/'
-          src: ['**/*.litcoffee', '**/*.coffee']
+          src: ['**/*.?(lit)coffee']
           dest: './lib/'
           rename: coffeeRename
         ]
@@ -32,12 +32,12 @@ module.exports = (grunt) ->
           clearRequireCache: true
           require: 'coffee-script/register'
           grep: grunt.option 'grep'
-        src: ['test/**/*.coffee', 'test/**/*.litcoffee']
+        src: ['test/**/*.?(lit)coffee']
     watch:
       options:
         atBegin: true
       lib:
-        files: ['src/*.litcoffee', 'src/*.coffee']
+        files: ['src/*.?(lit)coffee']
         tasks: ['build:node', 'build:standalone']
     bump:
       options:
