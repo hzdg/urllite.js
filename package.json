@@ -1,17 +1,17 @@
 {
   "name": "urllite",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A lightweight URL library for JavaScript.",
   "main": "./lib/complete.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
-    "grunt": "~0.4.1"
   },
   "devDependencies": {
     "mocha": "~1.13.0",
     "coffee-script": "~1.6.3",
+    "grunt": "~0.4.1",
     "grunt-cli": "~0.1.9",
     "grunt-contrib-coffee": "~0.7.0",
     "grunt-contrib-watch": "~0.5.3",
