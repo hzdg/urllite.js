@@ -10,11 +10,13 @@
 
   _dereq_('./extensions/normalize');
 
+  _dereq_('./extensions/toString');
+
   module.exports = urllite;
 
 }).call(this);
 
-},{"./core":2,"./extensions/normalize":3,"./extensions/relativize":4,"./extensions/resolve":5}],2:[function(_dereq_,module,exports){
+},{"./core":2,"./extensions/normalize":3,"./extensions/relativize":4,"./extensions/resolve":5,"./extensions/toString":6}],2:[function(_dereq_,module,exports){
 (function() {
   var URL, URL_PATTERN, defaults, urllite,
     __hasProp = {}.hasOwnProperty,
@@ -52,14 +54,6 @@
         hash: m[10],
         isSchemeRelative: m[2] != null
       });
-    };
-
-    URL.prototype.toString = function() {
-      var authority, prefix, userinfo;
-      prefix = this.isSchemeRelative ? '//' : this.protocol === 'file:' ? "" + this.protocol + "///" : this.protocol ? "" + this.protocol + "//" : '';
-      userinfo = this.password ? "" + this.username + ":" + this.password : this.username ? "" + this.username : '';
-      authority = userinfo ? "" + userinfo + "@" + this.host : this.host ? "" + this.host : '';
-      return "" + prefix + authority + this.pathname + this.search + this.hash;
     };
 
     return URL;
@@ -232,6 +226,24 @@
       p.pathname = this.isPathRelative ? base.pathname.slice(0, -1) === '/' ? "" + base.pathname + "/" + this.pathname : "" + (base.pathname.split('/').slice(0, -1).join('/')) + "/" + this.pathname : this.pathname;
     }
     return urllite._createURL(p).normalize();
+  };
+
+}).call(this);
+
+},{"../core":2}],6:[function(_dereq_,module,exports){
+(function() {
+  var URL, urllite;
+
+  urllite = _dereq_('../core');
+
+  URL = urllite.URL;
+
+  URL.prototype.toString = function() {
+    var authority, prefix, userinfo;
+    prefix = this.isSchemeRelative ? '//' : this.protocol === 'file:' ? "" + this.protocol + "///" : this.protocol ? "" + this.protocol + "//" : '';
+    userinfo = this.password ? "" + this.username + ":" + this.password : this.username ? "" + this.username : '';
+    authority = userinfo ? "" + userinfo + "@" + this.host : this.host ? "" + this.host : '';
+    return "" + prefix + authority + this.pathname + this.search + this.hash;
   };
 
 }).call(this);
