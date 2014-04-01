@@ -64,10 +64,9 @@ var url = urllite('http://example.com');
 console.log(url.host);  // => "example.com"
 ```
 
-All URL methods (other than `toString()`) are available as extensions. In node,
-all extensions are available by default. For the browser, you can require
-extensions selectively and create custom builds with only the extensions you
-need.
+All URL methods are available as extensions. In node, all extensions are
+available by default. For the browser, you can require extensions selectively
+and create custom builds with only the extensions you need.
 
 
 ### `resolve()`
