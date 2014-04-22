@@ -1,4 +1,5 @@
 urllite = require '../core'
+require './normalize'
 {URL} = urllite
 
 
