@@ -397,6 +397,36 @@
         "origin": "",
         "isPathRelative": true
       }
+    },
+    {
+      "name": "a path relative URL to a single-segment path relative URL",
+      "url": "a/b/c",
+      "base": "d",
+      "expected": {
+        "protocol": "",
+        "host": "",
+        "hostname": "",
+        "pathname": "a/b/c",
+        "search": "",
+        "hash": "",
+        "origin": "",
+        "isPathRelative": true
+      }
+    },
+    {
+      "name": "a path relative URL to an empty URL",
+      "url": "a/b/c",
+      "base": "",
+      "expected": {
+        "protocol": "",
+        "host": "",
+        "hostname": "",
+        "pathname": "a/b/c",
+        "search": "",
+        "hash": "",
+        "origin": "",
+        "isPathRelative": true
+      }
     }
   ],
   "relativize": [
