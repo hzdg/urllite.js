@@ -181,6 +181,8 @@
 
   urllite = _dereq_('../core');
 
+  _dereq_('./normalize');
+
   URL = urllite.URL;
 
   oldParse = URL.parse;
@@ -230,7 +232,7 @@
 
 }).call(this);
 
-},{"../core":2}],6:[function(_dereq_,module,exports){
+},{"../core":2,"./normalize":3}],6:[function(_dereq_,module,exports){
 (function() {
   var URL, urllite;
 
