@@ -211,7 +211,7 @@
   };
 
   URL.prototype.resolve = function(base) {
-    var p;
+    var p, prefix;
     if (this.isAbsolute) {
       return new urllite.URL(this);
     }
@@ -225,7 +225,7 @@
     } else if (this.isAbsolutePathRelative || this.isPathRelative) {
       copyProps(p, this, 'search', 'hash');
       copyProps(p, base, 'protocol', 'username', 'password', 'host', 'hostname', 'port');
-      p.pathname = this.isPathRelative ? base.pathname.slice(0, -1) === '/' ? "" + base.pathname + "/" + this.pathname : "" + (base.pathname.split('/').slice(0, -1).join('/')) + "/" + this.pathname : this.pathname;
+      p.pathname = this.isPathRelative ? base.pathname.slice(0, -1) === '/' ? "" + base.pathname + "/" + this.pathname : (prefix = base.pathname.split('/').slice(0, -1).join('/'), prefix ? "" + prefix + "/" + this.pathname : this.pathname) : this.pathname;
     }
     return urllite._createURL(p).normalize();
   };
