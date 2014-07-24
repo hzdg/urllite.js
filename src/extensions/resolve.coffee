@@ -34,7 +34,8 @@ URL::resolve = (base) ->
         if base.pathname[...-1] is '/'
           "#{ base.pathname }/#{ @pathname }"
         else
-          "#{ base.pathname.split('/')[...-1].join('/') }/#{ @pathname }"
+          prefix = base.pathname.split('/')[...-1].join('/')
+          if prefix then "#{ prefix }/#{ @pathname }" else @pathname
       else
         @pathname
 
