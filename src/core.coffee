@@ -45,14 +45,24 @@ urllite = (raw, opts) -> urllite.URL.parse raw, opts
 urllite.URL =
   class URL
     constructor: (props) ->
-      for own k, v of props
-        this[k] = v
+      for own k, v of defaults
+        this[k] = props[k] ? v
+
+      @host or=
+        if @hostname and @port then "#{ @hostname }:#{ @port }"
+        else if @hostname then @hostname
+        else ''
+      @origin or= if @protocol then "#{ @protocol }//#{ @host }" else ''
+      @isAbsolutePathRelative = not @host and @pathname.charAt(0) is '/'
+      @isPathRelative = not @host and @pathname.charAt(0) isnt '/'
+      @isRelative = @isSchemeRelative or @isAbsolutePathRelative or @isPathRelative
+      @isAbsolute = not @isRelative
 
     @parse = (raw) ->
       m = raw.toString().match URL_PATTERN
       pathname = m[8] or ''
       protocol = m[1]
-      urllite._createURL
+      new urllite.URL
         protocol: protocol
         username: m[3]
         password: m[4]
@@ -75,25 +85,5 @@ defaults =
   hash: ''
   origin: ''
   isSchemeRelative: false
-
-# A utility to build a new URL instance from only the minimum required
-# attributes. All attributes that can be inferred are.
-urllite._createURL = (bases...) ->
-  props = {}
-  for base in bases
-    for own k, v of defaults
-      props[k] = base[k] ? props[k] ? v
-
-  props.host =
-    if props.hostname and props.port then "#{ props.hostname }:#{ props.port }"
-    else if props.hostname then props.hostname
-    else ''
-  props.origin = if props.protocol then "#{ props.protocol }//#{ props.host }" else ''
-  props.isAbsolutePathRelative = not props.host and props.pathname.charAt(0) is '/'
-  props.isPathRelative = not props.host and props.pathname.charAt(0) isnt '/'
-  props.isRelative = props.isSchemeRelative or props.isAbsolutePathRelative or props.isPathRelative
-  props.isAbsolute = not props.isRelative
-
-  new urllite.URL props
 
 module.exports = urllite

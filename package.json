@@ -7,6 +7,7 @@
     "test": "test"
   },
   "dependencies": {
+    "xtend": "~4.0.0"
   },
   "devDependencies": {
     "mocha": "~1.13.0",

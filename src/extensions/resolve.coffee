@@ -39,4 +39,4 @@ URL::resolve = (base) ->
       else
         @pathname
 
-  urllite._createURL(p).normalize()
+  new urllite.URL(p).normalize()
